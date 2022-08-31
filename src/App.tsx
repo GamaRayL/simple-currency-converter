@@ -7,22 +7,7 @@ import css from "./App.module.css";
 
 function App() {
   const [apiError, setApiError] = useState<number>();
-  const [currencyData, setCurrencyData] = useState<IConvertResult | undefined>(
-    {
-      "date": "2018-02-22",
-      "info": {
-        "rate": 148.972231,
-        "timestamp": 1519328414
-      },
-      "query": {
-        "amount": 25,
-        "from": "GBP",
-        "to": "JPY"
-      },
-      "result": 3724.305775,
-      "success": true
-    }
-  );
+  const [currencyData, setCurrencyData] = useState<IConvertResult | undefined>();
   const [from, setFrom] = useState<string>("");
   const [to, setTo] = useState<string>("USD");
   const [amount, setAmount] = useState<number>(1);
