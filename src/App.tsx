@@ -7,7 +7,7 @@ import css from "./App.module.css";
 
 function App() {
   const [apiError, setApiError] = useState<number>();
-  const [currencyData, setCurrencyData] = useState<IConvertResult | undefined>();
+  const [currencyData, setCurrencyData] = useState<IConvertResult>();
   const [from, setFrom] = useState<string>("");
   const [to, setTo] = useState<string>("USD");
   const [amount, setAmount] = useState<number>(1);

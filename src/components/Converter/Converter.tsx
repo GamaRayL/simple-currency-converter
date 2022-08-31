@@ -6,8 +6,8 @@ import { CurrencyAutocomplete } from "components/CurrencyAutocomplete/CurrencyAu
 import css from "./Converter.module.css";
 
 interface ConverterProps extends IState {
-    apiError: number | undefined;
-    currencyData: IConvertResult | undefined;
+    apiError?: number;
+    currencyData?: IConvertResult;
     fullCurrencyName: string;
 }
 
