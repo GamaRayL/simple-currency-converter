@@ -60,7 +60,7 @@ export const Converter = (props: ConverterProps) => {
                     {amount + " " + fromCurrencyName + " = "}
                 </Typography>
                 <Typography sx={{ color: "#2e3c57", fontSize: 30 }}>
-                    {currencyData?.result === undefined ? null : currencyData.result + " " + toCurrencyName}
+                    {currencyData?.result ? currencyData.result : null + " " + toCurrencyName}
                 </Typography>
             </Stack>);
         } else {
