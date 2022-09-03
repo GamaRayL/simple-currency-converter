@@ -1,18 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 
 export interface IConvertResult {
-    date: string,
-    info: {
-        rate: number;
-        timestamp: number;
-    };
-    query: {
-        amount: number;
-        from: string;
-        to: string;
-    };
-    result: number;
-    success: boolean;
+    [key: number]: number,
 }
 
 
@@ -20,7 +9,9 @@ export interface IState {
     to: string;
     from: string;
     amount: number;
+    currencyNameTo: string;
     setTo: Dispatch<SetStateAction<string>>;
     setFrom: Dispatch<SetStateAction<string>>;
     setAmount: Dispatch<SetStateAction<number>>;
+    setCurrencyNameTo: Dispatch<SetStateAction<string>>;
 }

@@ -1,16 +1,17 @@
 import { Autocomplete, Box, TextField } from "@mui/material";
 import data from "store/data.json";
 import "currency-flags/dist/currency-flags.css";
+import React from "react";
 
 interface CurrencyAutocompleteProps {
-    inputValue: string;
+    value: string;
     label: string;
-    onChange: (e: React.SyntheticEvent, value: string[]) => void;
-    onChangeTextField: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange: (e: React.SyntheticEvent, value: string[] | null) => void;
 }
 
+
 export const CurrencyAutocomplete = (props: CurrencyAutocompleteProps) => {
-    const { label, inputValue, onChange, onChangeTextField } = props;
+    const { label, onChange, value } = props;
     const options = Object.entries(data).map((option) => {
         const firstLetter = option[0][0];
         return {
@@ -19,15 +20,14 @@ export const CurrencyAutocomplete = (props: CurrencyAutocompleteProps) => {
         };
     });
 
+
     return (
         <Autocomplete
             sx={{ minWidth: 120 }}
-            autoHighlight
             fullWidth
-            inputValue={inputValue}
-            disableClearable
             options={options.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
             onChange={onChange}
+            value={options.find(q => q[0] === value.toLocaleUpperCase())}
             getOptionLabel={(option) => option[0]}
             isOptionEqualToValue={(option, value) => option[0] === value[0]}
             groupBy={(option) => option.firstLetter}
@@ -41,7 +41,6 @@ export const CurrencyAutocomplete = (props: CurrencyAutocompleteProps) => {
                 <TextField
                     {...params}
                     label={label}
-                    onChange={onChangeTextField}
                     inputProps={{
                         ...params.inputProps,
                     }}

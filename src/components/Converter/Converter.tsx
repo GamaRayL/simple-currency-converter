@@ -1,66 +1,56 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IConvertResult, IState } from "types";
-import { Container, Button, Stack, TextField, Typography } from "@mui/material";
+import { Container, Button, Stack, Typography, TextField } from "@mui/material";
 import { SwapHorizRounded } from "@mui/icons-material";
-import { CurrencyAutocomplete } from "components/CurrencyAutocomplete/CurrencyAutocomplete";
+import { CurrencyAutocomplete } from "components/CurrencyAutocomplete";
 import css from "./Converter.module.css";
+import NumberFormat from "react-number-format";
+import getSymbolFromCurrency from "currency-symbol-map";
+
 
 interface ConverterProps extends IState {
     apiError?: number;
-    currencyData?: IConvertResult;
-    fullCurrencyName: string;
+    currencyData: IConvertResult | undefined;
 }
 
 export const Converter = (props: ConverterProps) => {
-    const { apiError, setTo, setFrom, setAmount, to, from, amount, currencyData, fullCurrencyName } = props;
-    const [fromCurrencyName, setFromCurrencyName] = useState<string>("");
-    const [toCurrencyName, setToCurrencyName] = useState<string>("United States Dollar");
+    const { apiError, setTo, setFrom, setAmount, to, from, amount, currencyData, currencyNameTo, setCurrencyNameTo } = props;
+    const [fromCurrencyName, setFromCurrencyName] = useState<string>("United States Dollar");
+    const resultOfAmount = new Intl.NumberFormat("ru-RU").format(Number(currencyData) * amount);
 
-    useEffect(() => {
-        setFromCurrencyName(fullCurrencyName);
-    }, [fullCurrencyName]);
-
-    const fetchFromValue = (e: React.SyntheticEvent, value: string[]) => {
+    const fetchFromValue = (e: React.SyntheticEvent, value: string[] | null) => {
         if (value) {
             setFromCurrencyName(value[1]);
-            setFrom(value[0]);
+            setFrom(value[0].toLocaleLowerCase());
         };
     };
 
-    const fetchToValue = (e: React.SyntheticEvent, value: string[]) => {
+    const fetchToValue = (e: React.SyntheticEvent, value: string[] | null) => {
         if (value) {
-            setToCurrencyName(value[1]);
-            setTo(value[0]);
+            setCurrencyNameTo(value[1]);
+            setTo(value[0].toLocaleLowerCase());
         }
     };
 
-    const fetchValueFromField = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAmount(Number(e.target.value));
-    };
-
-    const fetchValueFromTextField = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFrom(e.target.value);
-    };
-
-    const fetchValueToTextField = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTo(e.target.value);
+    const fetchValueFromAmountField = (e: any) => {
+        setAmount(e.value);
     };
 
     const swapValueOfCurrency = () => {
         setFrom(to);
         setTo(from);
-        setFromCurrencyName(toCurrencyName);
-        setToCurrencyName(fromCurrencyName);
+        setFromCurrencyName(currencyNameTo);
+        setCurrencyNameTo(fromCurrencyName);
     };
 
     const showElementIfValuesEnter = () => {
-        if (amount && to && from) {
+        if (to && from) {
             return (<Stack>
                 <Typography sx={{ color: "#5c667b" }}>
-                    {amount + " " + fromCurrencyName + " = "}
+                    {new Intl.NumberFormat("ru-RU").format(amount) + " " + fromCurrencyName + " = "}
                 </Typography>
                 <Typography sx={{ color: "#2e3c57", fontSize: 30 }}>
-                    {currencyData?.result ? currencyData.result : null + " " + toCurrencyName}
+                    {resultOfAmount + " " + currencyNameTo}
                 </Typography>
             </Stack>);
         } else {
@@ -69,6 +59,7 @@ export const Converter = (props: ConverterProps) => {
             </svg>);
         }
     };
+
 
     return (
         <div className={css.converter}>
@@ -94,25 +85,27 @@ export const Converter = (props: ConverterProps) => {
                         direction="row"
                         spacing={2}
                     >
-                        <TextField
+                        <NumberFormat
                             sx={{ minWidth: 120 }}
                             value={amount}
-                            onChange={fetchValueFromField}
+                            type="text"
                             label="Ввести сумму"
+                            customInput={TextField}
+                            thousandSeparator={true}
+                            prefix={getSymbolFromCurrency(`${from}`)}
+                            onValueChange={fetchValueFromAmountField}
                         />
                         <CurrencyAutocomplete
-                            inputValue={from}
+                            value={from}
                             onChange={fetchFromValue}
-                            onChangeTextField={fetchValueFromTextField}
                             label="Конвертировать из"
                         />
                         <Button variant="text" onClick={() => swapValueOfCurrency()}>
                             <SwapHorizRounded fontSize="large" />
                         </Button>
                         <CurrencyAutocomplete
-                            inputValue={to}
+                            value={to ? to : "AED"}
                             onChange={fetchToValue}
-                            onChangeTextField={fetchValueToTextField}
                             label="Конвертировать в"
                         />
                     </Stack>
