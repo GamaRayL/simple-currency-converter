@@ -15,7 +15,8 @@ function App() {
 
   useEffect(() => {
     async function getCurrencyBasedLang() {
-      const browserLang = window.navigator.language;
+      const browserLang = window.navigator.language.substring(0, 2);
+
       const api = `https://restcountries.com/v3.1/alpha/${browserLang}`;
       try {
         const response = await fetch(api);
