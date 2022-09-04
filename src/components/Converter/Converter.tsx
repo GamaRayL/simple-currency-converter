@@ -1,17 +1,28 @@
 import { useState } from "react";
 import { IConvertResult, IState } from "types";
-import { Container, Button, Stack, Typography, TextField } from "@mui/material";
-import { SwapHorizRounded } from "@mui/icons-material";
+import { Container, Stack, Typography, TextField, createTheme } from "@mui/material";
+import { SwapHoriz } from "@mui/icons-material";
 import { CurrencyAutocomplete } from "components/CurrencyAutocomplete";
 import css from "./Converter.module.css";
 import NumberFormat from "react-number-format";
 import getSymbolFromCurrency from "currency-symbol-map";
 
-
 interface ConverterProps extends IState {
     apiError?: number;
     currencyData: IConvertResult | undefined;
 }
+
+const theme = createTheme({
+    breakpoints: {
+        values: {
+            xs: 0,
+            sm: 630,
+            md: 900,
+            lg: 1200,
+            xl: 1536,
+        },
+    },
+});
 
 export const Converter = (props: ConverterProps) => {
     const { apiError, setTo, setFrom, setAmount, to, from, amount, currencyData, currencyNameTo, setCurrencyNameTo } = props;
@@ -74,7 +85,6 @@ export const Converter = (props: ConverterProps) => {
                 <Container maxWidth="md" sx={{
                     display: "flex",
                     flexDirection: "column",
-                    height: 220,
                     backgroundColor: "#FFFFFF",
                     p: 4,
                     gap: 4,
@@ -82,11 +92,21 @@ export const Converter = (props: ConverterProps) => {
                     boxShadow: "#2337504d 0px 6px 12px",
                 }}>
                     <Stack
-                        direction="row"
-                        spacing={2}
+                        sx={{
+                            display: "flex",
+                            alignItems: {
+                                sm: "center",
+                                xs: "baseline",
+                            },
+                            gap: 1,
+                            flexDirection: {
+                                sm: "row",
+                                xs: "column",
+                            }
+                        }}
                     >
                         <NumberFormat
-                            sx={{ minWidth: 120 }}
+                            sx={{ width: "100%" }}
                             value={amount}
                             type="text"
                             label="Ввести сумму"
@@ -100,9 +120,17 @@ export const Converter = (props: ConverterProps) => {
                             onChange={fetchFromValue}
                             label="Конвертировать из"
                         />
-                        <Button variant="text" onClick={() => swapValueOfCurrency()}>
-                            <SwapHorizRounded fontSize="large" />
-                        </Button>
+                        <SwapHoriz sx={{
+                            cursor: "pointer",
+                            transition: "0.2s ease-in-out",
+                            color: "#97a2a0",
+                            alignSelf: {
+                                xs: "center",
+                            },
+                            "&:hover": { color: "#00c7e0" }
+                        }}
+                            fontSize="large"
+                            onClick={() => swapValueOfCurrency()} />
                         <CurrencyAutocomplete
                             value={to ? to : "AED"}
                             onChange={fetchToValue}

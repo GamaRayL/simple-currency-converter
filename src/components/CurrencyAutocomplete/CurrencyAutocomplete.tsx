@@ -23,7 +23,6 @@ export const CurrencyAutocomplete = (props: CurrencyAutocompleteProps) => {
 
     return (
         <Autocomplete
-            sx={{ minWidth: 120 }}
             fullWidth
             options={options.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
             onChange={onChange}
