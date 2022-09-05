@@ -4,7 +4,6 @@ import { Typography } from '@mui/material';
 import { Converter } from 'components/Converter';
 import css from "./App.module.css";
 
-
 function App() {
   const [apiError, setApiError] = useState<number>();
   const [currencyData, setCurrencyData] = useState<IConvertResult>();

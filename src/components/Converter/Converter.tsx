@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IConvertResult, IState } from "types";
-import { Container, Stack, Typography, TextField, createTheme } from "@mui/material";
+import { Container, Stack, Typography, TextField } from "@mui/material";
 import { SwapHoriz } from "@mui/icons-material";
 import { CurrencyAutocomplete } from "components/CurrencyAutocomplete";
 import css from "./Converter.module.css";
@@ -12,17 +12,6 @@ interface ConverterProps extends IState {
     currencyData: IConvertResult | undefined;
 }
 
-const theme = createTheme({
-    breakpoints: {
-        values: {
-            xs: 0,
-            sm: 630,
-            md: 900,
-            lg: 1200,
-            xl: 1536,
-        },
-    },
-});
 
 export const Converter = (props: ConverterProps) => {
     const { apiError, setTo, setFrom, setAmount, to, from, amount, currencyData, currencyNameTo, setCurrencyNameTo } = props;

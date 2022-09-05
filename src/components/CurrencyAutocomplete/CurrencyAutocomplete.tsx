@@ -9,7 +9,6 @@ interface CurrencyAutocompleteProps {
     onChange: (e: React.SyntheticEvent, value: string[] | null) => void;
 }
 
-
 export const CurrencyAutocomplete = (props: CurrencyAutocompleteProps) => {
     const { label, onChange, value } = props;
     const options = Object.entries(data).map((option) => {
