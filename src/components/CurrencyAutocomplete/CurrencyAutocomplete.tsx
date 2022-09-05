@@ -1,7 +1,7 @@
+import React from "react";
 import { Autocomplete, Box, TextField } from "@mui/material";
 import data from "store/data.json";
 import "currency-flags/dist/currency-flags.css";
-import React from "react";
 
 interface CurrencyAutocompleteProps {
     value: string;
@@ -18,7 +18,6 @@ export const CurrencyAutocomplete = (props: CurrencyAutocompleteProps) => {
             ...option,
         };
     });
-
 
     return (
         <Autocomplete

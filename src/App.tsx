@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IConvertResult } from 'types';
-import { Typography } from '@mui/material';
 import { Converter } from 'components/Converter';
+import { Typography } from '@mui/material';
 import css from "./App.module.css";
 
 function App() {

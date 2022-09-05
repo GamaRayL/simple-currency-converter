@@ -1,17 +1,16 @@
 import { useState } from "react";
 import { IConvertResult, IState } from "types";
-import { Container, Stack, Typography, TextField } from "@mui/material";
-import { SwapHoriz } from "@mui/icons-material";
 import { CurrencyAutocomplete } from "components/CurrencyAutocomplete";
-import css from "./Converter.module.css";
 import NumberFormat from "react-number-format";
 import getSymbolFromCurrency from "currency-symbol-map";
+import { Container, Stack, Typography, TextField } from "@mui/material";
+import { SwapHoriz } from "@mui/icons-material";
+import css from "./Converter.module.css";
 
 interface ConverterProps extends IState {
     apiError?: number;
     currencyData: IConvertResult | undefined;
 }
-
 
 export const Converter = (props: ConverterProps) => {
     const { apiError, setTo, setFrom, setAmount, to, from, amount, currencyData, currencyNameTo, setCurrencyNameTo } = props;
@@ -59,7 +58,6 @@ export const Converter = (props: ConverterProps) => {
             </svg>);
         }
     };
-
 
     return (
         <div className={css.converter}>
