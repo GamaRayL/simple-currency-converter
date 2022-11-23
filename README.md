@@ -1,5 +1,7 @@
 # Конвертер валют
 
+## [Онлайн пример на Codesandbox](https://codesandbox.io/s/github/GamaRayL/simple-currency-converter/?file=/src/App.tsx)
+
 ## Стек технологий
 
 React, Typescript, Material UI
