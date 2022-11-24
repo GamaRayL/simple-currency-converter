@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { IConvertResult } from 'types';
+import { useEffect, useState } from 'react';
+import { IConvertResult, ICurrency } from 'types';
+import { getCurrencyData } from 'service';
 import { Converter } from 'components/Converter';
 import { Typography } from '@mui/material';
 import css from "./App.module.css";
+
+
 
 function App() {
   const [apiError, setApiError] = useState<number>();
@@ -10,26 +13,16 @@ function App() {
   const [from, setFrom] = useState<string>("usd");
   const [to, setTo] = useState<string>("");
   const [amount, setAmount] = useState<number>(1);
+
   const [currencyNameTo, setCurrencyNameTo] = useState<string>("");
 
   useEffect(() => {
-    async function getCurrencyBasedLang() {
-      const browserLang = window.navigator.language.substring(0, 2);
-
-      const api = `https://restcountries.com/v3.1/alpha/${browserLang}`;
-      try {
-        const response = await fetch(api);
-        const data = await response.json();
-        const currency = Object.getOwnPropertyNames(data[0].currencies);
-        const currencyCode = currency[0];
-        const currencyName = data[0].currencies[currencyCode].name;
-        setCurrencyNameTo(currencyName);
-        setTo(currencyCode.toLocaleLowerCase());
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getCurrencyBasedLang();
+    getCurrencyData()
+      .then((currency: ICurrency) => {
+        setCurrencyNameTo(Object.values(currency)[0].name);
+        setTo(Object.keys(currency)[0].toLocaleLowerCase());
+      })
+      .catch(error => console.log(error));
   }, []);
 
   useEffect(() => {
