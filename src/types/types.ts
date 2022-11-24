@@ -20,6 +20,10 @@ export interface IState {
   setCurrencyNameTo: Dispatch<SetStateAction<string>>;
 }
 
+export interface IApi {
+  setApiError?: Dispatch<SetStateAction<number>>;
+}
+
 // Props
 
 export interface ConverterProps extends IState {

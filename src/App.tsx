@@ -1,23 +1,21 @@
 import { useEffect, useState } from 'react';
 import { IConvertResult, ICurrency } from 'types';
-import { getCurrencyData } from 'service';
+import { getCurrency, getConvertedCurrency } from 'service';
 import { Converter } from 'components/Converter';
 import { Typography } from '@mui/material';
 import css from "./App.module.css";
-
-
+import { Dispatch, SetStateAction } from "react";
 
 function App() {
   const [apiError, setApiError] = useState<number>();
-  const [currencyData, setCurrencyData] = useState<IConvertResult>();
+  const [currencyData, setCurrencyData] = useState<IConvertResult>(); // currencyValue setCurrencyValue
   const [from, setFrom] = useState<string>("usd");
   const [to, setTo] = useState<string>("");
   const [amount, setAmount] = useState<number>(1);
-
   const [currencyNameTo, setCurrencyNameTo] = useState<string>("");
 
   useEffect(() => {
-    getCurrencyData()
+    getCurrency(setApiError as Dispatch<SetStateAction<number>>)
       .then((currency: ICurrency) => {
         setCurrencyNameTo(Object.values(currency)[0].name);
         setTo(Object.keys(currency)[0].toLocaleLowerCase());
@@ -27,21 +25,9 @@ function App() {
 
   useEffect(() => {
     if (!to) return;
-    async function getCurrencyData() {
-      const api = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${from}/${to}.json`;
-      try {
-        const response = await fetch(api);
-        if (response.status >= 400 && response.status <= 599) {
-          setApiError(response.status);
-        } else {
-          const data = await response.json();
-          setCurrencyData(data[to]);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getCurrencyData();
+    getConvertedCurrency(from, to, setApiError as Dispatch<SetStateAction<number>>)
+      .then(data => setCurrencyData(data[to]))
+      .catch(error => console.log(error));
   }, [from, to]);
 
   return (
