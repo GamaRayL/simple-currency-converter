@@ -1,16 +1,64 @@
 import { useState } from "react";
 import NumberFormat, { NumberFormatValues } from "react-number-format";
 import { ConverterProps } from "types";
-import { CurrencyAutocomplete } from "components/CurrencyAutocomplete";
 import getSymbolFromCurrency from "currency-symbol-map";
-import { Container, Stack, Typography, TextField } from "@mui/material";
+import { Container, Stack, TextField } from "@mui/material";
 import { SwapHoriz } from "@mui/icons-material";
-import css from "./Converter.module.css";
+import { Crash } from "components/Crash";
+import styled from "@emotion/styled";
+import { InputAutocomplete } from "components/InputAutocomplete";
+import { Result } from "components/Result";
+
+const StyledContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 32px;
+  border-radius: 8px;
+  background-color: #FFFFFF;
+  box-shadow: 0px 6px 12px #2337504d;
+`;
+
+const StyledStack = styled(Stack)`
+  display: flex;
+  gap: 14px;
+
+  @media screen and (min-width: 600px) {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+`;
+
+const StyledSwapHoriz = styled(SwapHoriz)`
+  cursor: pointer;
+  font-size: 32px;
+  transition: 0.2s ease-in-out;
+  color: #97a2a0;
+
+
+  @media screen and (min-width: 600px) {
+    align-self: center;
+  }
+
+  &:hover {
+    color: #00c7e0;
+  }
+`;
 
 export const Converter = (props: ConverterProps) => {
-  const { apiError, setToInput, setFromInput, setAmount, toInput, fromInput, amount, сurrencyValue, currencyFullNameTo, setCurrencyFullNameTo } = props;
+  const {
+    apiError,
+    setToInput,
+    setFromInput,
+    setAmount,
+    toInput,
+    fromInput,
+    amount,
+    сurrencyValue,
+    currencyFullNameTo,
+    setCurrencyFullNameTo } = props;
   const [fromCurrencyName, setFromCurrencyName] = useState<string>("United States Dollar");
-  const resultOfAmount = new Intl.NumberFormat("ru-RU").format(Number(сurrencyValue) * amount);
 
   const onChangeFromHandler = (e: React.SyntheticEvent, value: string[] | null) => {
     if (value) {
@@ -37,55 +85,12 @@ export const Converter = (props: ConverterProps) => {
     setCurrencyFullNameTo(fromCurrencyName);
   };
 
-  const showElementIfValuesEnter = () => {
-    if (fromInput && fromInput) {
-      return (<Stack>
-        <Typography sx={{ color: "#5c667b" }}>
-          {new Intl.NumberFormat("ru-RU").format(amount) + " " + fromCurrencyName + " = "}
-        </Typography>
-        <Typography sx={{ color: "#2e3c57", fontSize: 30 }}>
-          {resultOfAmount + " " + currencyFullNameTo}
-        </Typography>
-      </Stack>);
-    } else {
-      return (<svg className={css.loader} viewBox="25 25 50 50">
-        <circle className={css.itemOfLoader} r="20" cy="50" cx="50"></circle>
-      </svg>);
-    }
-  };
-
   return (
-    <div className={css.converter}>
-      {apiError ?
-        <Container sx={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
-          <Typography sx={{ fontSize: 44, color: "#FFFFFF" }}
-            variant="overline"
-            component="h2">Error {apiError}</Typography>
-          <img className={css.imageError} src="/undraw_server_down.svg" alt="" />
-        </Container>
-        :
-        <Container maxWidth="md" sx={{
-          display: "flex",
-          flexDirection: "column",
-          backgroundColor: "#FFFFFF",
-          p: 4,
-          gap: 4,
-          borderRadius: "8px",
-          boxShadow: "#2337504d 0px 6px 12px",
-        }}>
-          <Stack
-            sx={{
-              display: "flex",
-              alignItems: {
-                sm: "center",
-                xs: "baseline",
-              },
-              gap: 1,
-              flexDirection: {
-                sm: "row",
-                xs: "column",
-              }
-            }}
+    <>
+      {apiError
+        ? <Crash apiError={apiError} />
+        : <StyledContainer maxWidth="md">
+          <StyledStack
           >
             <NumberFormat
               sx={{ width: "100%" }}
@@ -97,30 +102,29 @@ export const Converter = (props: ConverterProps) => {
               prefix={getSymbolFromCurrency(`${fromInput}`)}
               onValueChange={onChangeEnterHandler}
             />
-            <CurrencyAutocomplete
+            <InputAutocomplete
               value={fromInput}
               onChange={onChangeFromHandler}
               label="Конвертировать из"
             />
-            <SwapHoriz sx={{
-              cursor: "pointer",
-              transition: "0.2s ease-in-out",
-              color: "#97a2a0",
-              alignSelf: {
-                xs: "center",
-              },
-              "&:hover": { color: "#00c7e0" }
-            }}
-              fontSize="large"
-              onClick={() => onSubmitSwapHandler()} />
-            <CurrencyAutocomplete
+            <StyledSwapHoriz
+              onClick={() => onSubmitSwapHandler()}
+            />
+            <InputAutocomplete
               value={toInput ? toInput : "AED"}
               onChange={onChangeToHandler}
               label="Конвертировать в"
             />
-          </Stack>
-          {showElementIfValuesEnter()}
-        </Container>}
-    </div>
+          </StyledStack>
+          <Result
+            сurrencyValue={сurrencyValue}
+            toInput={toInput}
+            fromInput={fromInput}
+            amount={amount}
+            fromCurrencyName={fromCurrencyName}
+            currencyFullNameTo={currencyFullNameTo}
+          />
+        </StyledContainer>}
+    </>
   );
 };

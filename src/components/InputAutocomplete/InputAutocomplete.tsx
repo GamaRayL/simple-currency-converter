@@ -1,9 +1,9 @@
-import { CurrencyAutocompleteProps } from "types";
+import { InputAutocompleteProps } from "types";
 import { Autocomplete, Box, TextField } from "@mui/material";
 import objCurrencyName from "store/data.json";
 import "currency-flags/dist/currency-flags.css";
 
-export const CurrencyAutocomplete = (props: CurrencyAutocompleteProps) => {
+export const InputAutocomplete = (props: InputAutocompleteProps) => {
   const { label, onChange, value } = props;
   const options = Object.entries(objCurrencyName).map((option) => {
     const firstLetter = option[0][0];

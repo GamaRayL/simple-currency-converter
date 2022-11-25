@@ -8,12 +8,14 @@ export interface ICurrency {
 export interface IConvertResult {
   [key: number]: number,
 }
-
-export interface IState {
+export interface IBase {
   toInput: string;
   fromInput: string;
   amount: number;
   currencyFullNameTo: string;
+}
+
+export interface IState extends IBase {
   setToInput: Dispatch<SetStateAction<string>>;
   setFromInput: Dispatch<SetStateAction<string>>;
   setAmount: Dispatch<SetStateAction<number>>;
@@ -31,8 +33,13 @@ export interface ConverterProps extends IState {
   сurrencyValue: IConvertResult | undefined;
 }
 
-export interface CurrencyAutocompleteProps {
+export interface InputAutocompleteProps {
   value: string;
   label: string;
   onChange: (e: React.SyntheticEvent, value: string[] | null) => void;
+}
+
+export interface ResultProps extends IBase {
+  fromCurrencyName: string;
+  сurrencyValue: IConvertResult | undefined;
 }
