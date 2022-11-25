@@ -58,6 +58,7 @@ export const Converter = (props: ConverterProps) => {
     сurrencyValue,
     currencyFullNameTo,
     setCurrencyFullNameTo } = props;
+
   const [fromCurrencyName, setFromCurrencyName] = useState<string>("United States Dollar");
 
   const onChangeFromHandler = (e: React.SyntheticEvent, value: string[] | null) => {

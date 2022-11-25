@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { IConvertResult, ICurrency } from 'types';
-import { getCurrency, getConvertedCurrency } from 'service';
+import { getCurrency, getConvertedCurrency } from 'utils/api';
 import { Converter } from 'components/Converter';
 import css from "./App.module.css";
 import { Dispatch, SetStateAction } from "react";
