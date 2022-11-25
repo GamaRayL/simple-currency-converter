@@ -2,9 +2,17 @@ import { useEffect, useState } from 'react';
 import { IConvertResult, ICurrency } from 'types';
 import { getCurrency, getConvertedCurrency } from 'utils/api';
 import { Converter } from 'components/Converter';
-import css from "./App.module.css";
 import { Dispatch, SetStateAction } from "react";
 import { Title } from 'components/Title';
+import styled from '@emotion/styled';
+
+const CustomApp = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 140px;
+  padding: 20px;
+`;
 
 function App() {
   const [apiError, setApiError] = useState<number>();
@@ -31,7 +39,7 @@ function App() {
   }, [fromInput, toInput]);
 
   return (
-    <div className={css.app}>
+    <CustomApp>
       <Title />
       <Converter
         toInput={toInput}
@@ -45,7 +53,7 @@ function App() {
         currencyFullNameTo={currencyFullNameTo}
         setCurrencyFullNameTo={setCurrencyFullNameTo}
       />
-    </div>
+    </CustomApp>
   );
 }
 
