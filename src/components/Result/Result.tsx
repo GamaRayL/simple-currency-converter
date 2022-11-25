@@ -41,6 +41,15 @@ const LoaderCircle = styled.circle`
   }
 `;
 
+const TypographyAmountFrom = styled(Typography)`
+  color: #5c667b;
+`;
+
+const TypographyAmountTo = styled(Typography)`
+  color: #2e3c57;
+  font-size: 30px;
+`;
+
 export const Result: FC<ResultProps> = (props) => {
   const { toInput, fromInput, amount, fromCurrencyName, сurrencyValue, currencyFullNameTo } = props;
   const resultOfAmount = new Intl.NumberFormat("ru-RU").format(Number(сurrencyValue) * amount);
@@ -51,12 +60,12 @@ export const Result: FC<ResultProps> = (props) => {
         toInput && fromInput && amount
           ?
           <Stack>
-            <Typography sx={{ color: "#5c667b" }}>
-              {new Intl.NumberFormat("ru-RU").format(amount) + " " + fromCurrencyName + " = "}
-            </Typography>
-            <Typography sx={{ color: "#2e3c57", fontSize: 30 }}>
-              {resultOfAmount + " " + currencyFullNameTo}
-            </Typography>
+            <TypographyAmountFrom>
+              {new Intl.NumberFormat("ru-RU").format(amount) + ` ${fromCurrencyName} =`}
+            </TypographyAmountFrom>
+            <TypographyAmountTo>
+              {`${resultOfAmount} ` + currencyFullNameTo}
+            </TypographyAmountTo>
           </Stack>
           :
           <Loader viewBox="25 25 50 50">
