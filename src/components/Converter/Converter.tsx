@@ -49,6 +49,8 @@ const StyledSwapHoriz = styled(SwapHoriz)`
 `;
 
 export const Converter: FC = () => {
+  // UseState`s
+
   const [fromCurrencyName, setFromCurrencyName] = useState<string>("United States Dollar");
   const [apiError, setApiError] = useState<number>();
   const [currencyValue, setCurrencyValue] = useState<IConvertResult>();
@@ -56,6 +58,8 @@ export const Converter: FC = () => {
   const [toInput, setToInput] = useState<string>("");
   const [amount, setAmount] = useState<number>(1);
   const [currencyFullNameTo, setCurrencyFullNameTo] = useState<string>("");
+
+  // UseEffects`s
 
   useEffect(() => {
     getCurrency(setApiError as Dispatch<SetStateAction<number>>)
@@ -73,7 +77,7 @@ export const Converter: FC = () => {
       .catch(error => console.log(error));
   }, [fromInput, toInput]);
 
-
+// Handler functions
 
   const onChangeFromHandler = (e: React.SyntheticEvent, value: string[] | null) => {
     if (value) {
