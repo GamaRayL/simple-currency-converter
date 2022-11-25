@@ -1,6 +1,7 @@
-import styled from "@emotion/styled";
-import { Stack, Typography } from "@mui/material";
+import { FC } from "react";
 import { ResultProps } from "types";
+import { Stack, Typography } from "@mui/material";
+import styled from "@emotion/styled";
 
 const Loader = styled.svg`
   width: 3.25em;
@@ -40,7 +41,7 @@ const LoaderCircle = styled.circle`
   }
 `;
 
-export const Result = (props: ResultProps) => {
+export const Result: FC<ResultProps> = (props) => {
   const { toInput, fromInput, amount, fromCurrencyName, сurrencyValue, currencyFullNameTo } = props;
   const resultOfAmount = new Intl.NumberFormat("ru-RU").format(Number(сurrencyValue) * amount);
 

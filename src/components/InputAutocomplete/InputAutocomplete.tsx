@@ -1,9 +1,10 @@
+import { FC } from "react";
 import { InputAutocompleteProps } from "types";
 import { Autocomplete, Box, TextField } from "@mui/material";
 import objCurrencyName from "store/data.json";
 import "currency-flags/dist/currency-flags.css";
 
-export const InputAutocomplete = (props: InputAutocompleteProps) => {
+export const InputAutocomplete: FC<InputAutocompleteProps> = (props) => {
   const { label, onChange, value } = props;
   const options = Object.entries(objCurrencyName).map((option) => {
     const firstLetter = option[0][0];

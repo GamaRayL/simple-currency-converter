@@ -1,13 +1,13 @@
-import { useState } from "react";
-import NumberFormat, { NumberFormatValues } from "react-number-format";
+import { FC, useState } from "react";
 import { ConverterProps } from "types";
-import getSymbolFromCurrency from "currency-symbol-map";
 import { Container, Stack, TextField } from "@mui/material";
 import { SwapHoriz } from "@mui/icons-material";
-import { Crash } from "components/Crash";
-import styled from "@emotion/styled";
 import { InputAutocomplete } from "components/InputAutocomplete";
+import { Crash } from "components/Crash";
 import { Result } from "components/Result";
+import NumberFormat, { NumberFormatValues } from "react-number-format";
+import getSymbolFromCurrency from "currency-symbol-map";
+import styled from "@emotion/styled";
 
 const StyledContainer = styled(Container)`
   display: flex;
@@ -46,7 +46,7 @@ const StyledSwapHoriz = styled(SwapHoriz)`
   }
 `;
 
-export const Converter = (props: ConverterProps) => {
+export const Converter: FC<ConverterProps> = (props) => {
   const {
     apiError,
     setToInput,

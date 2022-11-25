@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { IConvertResult, ICurrency } from 'types';
 import { getCurrency, getConvertedCurrency } from 'utils/api';
 import { Converter } from 'components/Converter';
-import { Dispatch, SetStateAction } from "react";
 import { Title } from 'components/Title';
-import styled from '@emotion/styled';
 import { css, Global } from '@emotion/react';
+import styled from '@emotion/styled';
 
 const CustomApp = styled.div`
   display: flex;
@@ -22,7 +21,6 @@ const GlobalStyles = css`
     background: linear-gradient(to right, #f2fcfe, #1c92d2);
   }
 `;
-
 
 function App() {
   const [apiError, setApiError] = useState<number>();

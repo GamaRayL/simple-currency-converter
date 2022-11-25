@@ -1,18 +1,19 @@
+import { FC } from "react";
 import { Typography } from "@mui/material";
+import styled from "@emotion/styled";
 
-export const Title = () => {
+const CustomTypography = styled(Typography)`
+  display: flex;
+  justify-content: center;
+  padding-bottom: 24px;
+  font-size: 28px;
+  color: #c2fff6;
+`;
+
+export const Title: FC = () => {
   return (
-    <Typography
-      variant="overline"
-      component="h1"
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        pb: 4,
-        fontSize: 28,
-        color: "#c2fff6"
-      }}>
+    <CustomTypography variant="overline">
       Converter
-    </Typography>
+    </CustomTypography>
   );
 };

@@ -1,7 +1,7 @@
-import styled from "@emotion/styled";
+import { FC } from "react";
 import { Typography } from "@mui/material";
 import { Container } from "@mui/system";
-import { FC } from "react";
+import styled from "@emotion/styled";
 
 const CustomContainer = styled(Container)`
   display: flex;
