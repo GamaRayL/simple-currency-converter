@@ -5,6 +5,7 @@ import { Converter } from 'components/Converter';
 import { Dispatch, SetStateAction } from "react";
 import { Title } from 'components/Title';
 import styled from '@emotion/styled';
+import { css, Global } from '@emotion/react';
 
 const CustomApp = styled.div`
   display: flex;
@@ -13,6 +14,15 @@ const CustomApp = styled.div`
   margin-top: 140px;
   padding: 20px;
 `;
+
+const GlobalStyles = css`
+  body {
+    background: #1c92d2;
+    background: -webkit-linear-gradient(to right, #f2fcfe, #1c92d2);
+    background: linear-gradient(to right, #f2fcfe, #1c92d2);
+  }
+`;
+
 
 function App() {
   const [apiError, setApiError] = useState<number>();
@@ -40,6 +50,7 @@ function App() {
 
   return (
     <CustomApp>
+      <Global styles={GlobalStyles} />
       <Title />
       <Converter
         toInput={toInput}
