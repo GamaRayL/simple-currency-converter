@@ -1,6 +1,8 @@
-import { FC, useState } from "react";
-import { ConverterProps } from "types";
+import { FC, useState, useEffect } from "react";
 import { Container, Stack, TextField } from "@mui/material";
+import { Dispatch, SetStateAction } from "react";
+import { getConvertedCurrency, getCurrency } from "utils/api";
+import { IConvertResult, ICurrency } from "types";
 import { SwapHoriz } from "@mui/icons-material";
 import { InputAutocomplete } from "components/InputAutocomplete";
 import { Crash } from "components/Crash";
@@ -46,20 +48,32 @@ const StyledSwapHoriz = styled(SwapHoriz)`
   }
 `;
 
-export const Converter: FC<ConverterProps> = (props) => {
-  const {
-    apiError,
-    setToInput,
-    setFromInput,
-    setAmount,
-    toInput,
-    fromInput,
-    amount,
-    сurrencyValue,
-    currencyFullNameTo,
-    setCurrencyFullNameTo } = props;
-
+export const Converter: FC = () => {
   const [fromCurrencyName, setFromCurrencyName] = useState<string>("United States Dollar");
+  const [apiError, setApiError] = useState<number>();
+  const [currencyValue, setCurrencyValue] = useState<IConvertResult>();
+  const [fromInput, setFromInput] = useState<string>("usd");
+  const [toInput, setToInput] = useState<string>("");
+  const [amount, setAmount] = useState<number>(1);
+  const [currencyFullNameTo, setCurrencyFullNameTo] = useState<string>("");
+
+  useEffect(() => {
+    getCurrency(setApiError as Dispatch<SetStateAction<number>>)
+      .then((currency: ICurrency) => {
+        setCurrencyFullNameTo(Object.values(currency)[0].name);
+        setToInput(Object.keys(currency)[0].toLocaleLowerCase());
+      })
+      .catch(error => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    if (!toInput) return;
+    getConvertedCurrency(fromInput, toInput, setApiError as Dispatch<SetStateAction<number>>)
+      .then(data => setCurrencyValue(data[toInput]))
+      .catch(error => console.log(error));
+  }, [fromInput, toInput]);
+
+
 
   const onChangeFromHandler = (e: React.SyntheticEvent, value: string[] | null) => {
     if (value) {
@@ -118,7 +132,7 @@ export const Converter: FC<ConverterProps> = (props) => {
             />
           </StyledStack>
           <Result
-            сurrencyValue={сurrencyValue}
+            сurrencyValue={currencyValue}
             toInput={toInput}
             fromInput={fromInput}
             amount={amount}
