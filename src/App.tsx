@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { IConvertResult, ICurrency } from 'types';
 import { getCurrency, getConvertedCurrency } from 'service';
 import { Converter } from 'components/Converter';
-import { Typography } from '@mui/material';
 import css from "./App.module.css";
 import { Dispatch, SetStateAction } from "react";
+import { Title } from 'components/Title';
 
 function App() {
   const [apiError, setApiError] = useState<number>();
@@ -32,13 +32,7 @@ function App() {
 
   return (
     <div className={css.app}>
-      <Typography sx={{
-        display: "flex",
-        justifyContent: "center",
-        pb: 4,
-        fontSize: 28,
-        color: "#c2fff6"
-      }} variant="overline" component="h1">Converter</Typography>
+      <Title />
       <Converter
         toInput={toInput}
         fromInput={fromInput}
