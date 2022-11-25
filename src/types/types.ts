@@ -10,14 +10,14 @@ export interface IConvertResult {
 }
 
 export interface IState {
-  to: string;
-  from: string;
+  toInput: string;
+  fromInput: string;
   amount: number;
-  currencyNameTo: string;
-  setTo: Dispatch<SetStateAction<string>>;
-  setFrom: Dispatch<SetStateAction<string>>;
+  currencyFullNameTo: string;
+  setToInput: Dispatch<SetStateAction<string>>;
+  setFromInput: Dispatch<SetStateAction<string>>;
   setAmount: Dispatch<SetStateAction<number>>;
-  setCurrencyNameTo: Dispatch<SetStateAction<string>>;
+  setCurrencyFullNameTo: Dispatch<SetStateAction<string>>;
 }
 
 export interface IApi {
@@ -28,7 +28,7 @@ export interface IApi {
 
 export interface ConverterProps extends IState {
   apiError?: number;
-  currencyData: IConvertResult | undefined;
+  сurrencyValue: IConvertResult | undefined;
 }
 
 export interface CurrencyAutocompleteProps {

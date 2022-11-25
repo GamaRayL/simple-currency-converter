@@ -8,43 +8,43 @@ import { SwapHoriz } from "@mui/icons-material";
 import css from "./Converter.module.css";
 
 export const Converter = (props: ConverterProps) => {
-  const { apiError, setTo, setFrom, setAmount, to, from, amount, currencyData, currencyNameTo, setCurrencyNameTo } = props;
+  const { apiError, setToInput, setFromInput, setAmount, toInput, fromInput, amount, сurrencyValue, currencyFullNameTo, setCurrencyFullNameTo } = props;
   const [fromCurrencyName, setFromCurrencyName] = useState<string>("United States Dollar");
-  const resultOfAmount = new Intl.NumberFormat("ru-RU").format(Number(currencyData) * amount);
+  const resultOfAmount = new Intl.NumberFormat("ru-RU").format(Number(сurrencyValue) * amount);
 
-  const fetchFromValue = (e: React.SyntheticEvent, value: string[] | null) => {
+  const onChangeFromHandler = (e: React.SyntheticEvent, value: string[] | null) => {
     if (value) {
       setFromCurrencyName(value[1]);
-      setFrom(value[0].toLocaleLowerCase());
+      setFromInput(value[0].toLocaleLowerCase());
     };
   };
 
-  const fetchToValue = (e: React.SyntheticEvent, value: string[] | null) => {
+  const onChangeToHandler = (e: React.SyntheticEvent, value: string[] | null) => {
     if (value) {
-      setCurrencyNameTo(value[1]);
-      setTo(value[0].toLocaleLowerCase());
+      setCurrencyFullNameTo(value[1]);
+      setToInput(value[0].toLocaleLowerCase());
     }
   };
 
-  const fetchValueFromAmountField = (e: NumberFormatValues) => {
+  const onChangeEnterHandler = (e: NumberFormatValues) => {
     setAmount(Number(e.floatValue));
   };
 
-  const swapValueOfCurrency = () => {
-    setFrom(to);
-    setTo(from);
-    setFromCurrencyName(currencyNameTo);
-    setCurrencyNameTo(fromCurrencyName);
+  const onSubmitSwapHandler = () => {
+    setFromInput(toInput);
+    setToInput(fromInput);
+    setFromCurrencyName(currencyFullNameTo);
+    setCurrencyFullNameTo(fromCurrencyName);
   };
 
   const showElementIfValuesEnter = () => {
-    if (to && from) {
+    if (fromInput && fromInput) {
       return (<Stack>
         <Typography sx={{ color: "#5c667b" }}>
           {new Intl.NumberFormat("ru-RU").format(amount) + " " + fromCurrencyName + " = "}
         </Typography>
         <Typography sx={{ color: "#2e3c57", fontSize: 30 }}>
-          {resultOfAmount + " " + currencyNameTo}
+          {resultOfAmount + " " + currencyFullNameTo}
         </Typography>
       </Stack>);
     } else {
@@ -94,12 +94,12 @@ export const Converter = (props: ConverterProps) => {
               label="Ввести сумму"
               customInput={TextField}
               thousandSeparator={true}
-              prefix={getSymbolFromCurrency(`${from}`)}
-              onValueChange={fetchValueFromAmountField}
+              prefix={getSymbolFromCurrency(`${fromInput}`)}
+              onValueChange={onChangeEnterHandler}
             />
             <CurrencyAutocomplete
-              value={from}
-              onChange={fetchFromValue}
+              value={fromInput}
+              onChange={onChangeFromHandler}
               label="Конвертировать из"
             />
             <SwapHoriz sx={{
@@ -112,10 +112,10 @@ export const Converter = (props: ConverterProps) => {
               "&:hover": { color: "#00c7e0" }
             }}
               fontSize="large"
-              onClick={() => swapValueOfCurrency()} />
+              onClick={() => onSubmitSwapHandler()} />
             <CurrencyAutocomplete
-              value={to ? to : "AED"}
-              onChange={fetchToValue}
+              value={toInput ? toInput : "AED"}
+              onChange={onChangeToHandler}
               label="Конвертировать в"
             />
           </Stack>

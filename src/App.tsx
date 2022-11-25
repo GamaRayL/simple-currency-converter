@@ -8,27 +8,27 @@ import { Dispatch, SetStateAction } from "react";
 
 function App() {
   const [apiError, setApiError] = useState<number>();
-  const [currencyData, setCurrencyData] = useState<IConvertResult>(); // currencyValue setCurrencyValue
-  const [from, setFrom] = useState<string>("usd");
-  const [to, setTo] = useState<string>("");
+  const [currencyValue, setCurrencyValue] = useState<IConvertResult>();
+  const [fromInput, setFromInput] = useState<string>("usd");
+  const [toInput, setToInput] = useState<string>("");
   const [amount, setAmount] = useState<number>(1);
-  const [currencyNameTo, setCurrencyNameTo] = useState<string>("");
+  const [currencyFullNameTo, setCurrencyFullNameTo] = useState<string>("");
 
   useEffect(() => {
     getCurrency(setApiError as Dispatch<SetStateAction<number>>)
       .then((currency: ICurrency) => {
-        setCurrencyNameTo(Object.values(currency)[0].name);
-        setTo(Object.keys(currency)[0].toLocaleLowerCase());
+        setCurrencyFullNameTo(Object.values(currency)[0].name);
+        setToInput(Object.keys(currency)[0].toLocaleLowerCase());
       })
       .catch(error => console.log(error));
   }, []);
 
   useEffect(() => {
-    if (!to) return;
-    getConvertedCurrency(from, to, setApiError as Dispatch<SetStateAction<number>>)
-      .then(data => setCurrencyData(data[to]))
+    if (!toInput) return;
+    getConvertedCurrency(fromInput, toInput, setApiError as Dispatch<SetStateAction<number>>)
+      .then(data => setCurrencyValue(data[toInput]))
       .catch(error => console.log(error));
-  }, [from, to]);
+  }, [fromInput, toInput]);
 
   return (
     <div className={css.app}>
@@ -40,16 +40,16 @@ function App() {
         color: "#c2fff6"
       }} variant="overline" component="h1">Converter</Typography>
       <Converter
-        to={to}
-        from={from}
+        toInput={toInput}
+        fromInput={fromInput}
         amount={amount}
         apiError={apiError}
-        setTo={setTo}
-        setFrom={setFrom}
+        setToInput={setToInput}
+        setFromInput={setFromInput}
         setAmount={setAmount}
-        currencyData={currencyData}
-        currencyNameTo={currencyNameTo}
-        setCurrencyNameTo={setCurrencyNameTo}
+        сurrencyValue={currencyValue}
+        currencyFullNameTo={currencyFullNameTo}
+        setCurrencyFullNameTo={setCurrencyFullNameTo}
       />
     </div>
   );
