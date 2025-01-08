@@ -11,8 +11,8 @@ export const getCurrency = async (setApiError?: Dispatch<SetStateAction<number>>
   return data[0].currencies;
 };
 
-export const getConvertedCurrency = async (fromInput: string, toInput: string, setApiError?: Dispatch<SetStateAction<number>>) => {
-  const api = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${fromInput}/${toInput}.json`;
+export const getConvertedCurrency = async (fromInput: string, setApiError?: Dispatch<SetStateAction<number>>) => {
+  const api = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${fromInput}.json`;
   const response = await fetch(api);
   if (!response.ok) {
     setApiError!(response.status);
