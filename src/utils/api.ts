@@ -12,7 +12,7 @@ export const getCurrency = async (setApiError?: Dispatch<SetStateAction<number>>
 };
 
 export const getConvertedCurrency = async (fromInput: string, toInput: string, setApiError?: Dispatch<SetStateAction<number>>) => {
-  const api = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${fromInput}/${toInput}.json`;
+  const api = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${fromInput}/${toInput}.json`;
   const response = await fetch(api);
   if (!response.ok) {
     setApiError!(response.status);
