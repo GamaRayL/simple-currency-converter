@@ -72,8 +72,8 @@ export const Converter: FC = () => {
 
   useEffect(() => {
     if (!toInput) return;
-    getConvertedCurrency(fromInput, toInput, setApiError as Dispatch<SetStateAction<number>>)
-      .then(data => setCurrencyValue(data[toInput]))
+    getConvertedCurrency(fromInput, setApiError as Dispatch<SetStateAction<number>>)
+      .then(data => setCurrencyValue(data.fromInput.toInput))
       .catch(error => console.log(error));
   }, [fromInput, toInput]);
 
